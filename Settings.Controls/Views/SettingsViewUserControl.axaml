@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:Settings.Controls.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Settings.Controls.SettingsViewUserControl"
+             x:DataType="viewModels:SettingsViewUserControlViewModel">
+    <Grid>
+        <DataGrid ItemsSource="{Binding Signals}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  GridLinesVisibility="All"
+                  BorderThickness="1"
+                  BorderBrush="Gray"
+                  Margin="5"
+                  FontStretch="Condensed"
+                  FontSize="11">
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Тип" Binding="{Binding Type}" Width="auto"/>
+                <DataGridTextColumn Header="Пар. 1" Binding="{Binding S1}" Width="auto"/>
+                <DataGridTextColumn Header="Пар. 2" Binding="{Binding S2}" Width="auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
