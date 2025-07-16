@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Settings.Core.Interfaces;
 
 namespace Settings.Controls.ViewModels;
@@ -20,6 +21,28 @@ public class SettingsViewUserControlViewModel : BindableBase
 
     public async Task LoadThings()
     {
-        
+        try
+        {
+            var antennas = await _settingsRepository.GetAllAsync();
+
+            _settings.Clear();
+
+            foreach (var ant in antennas)
+            {
+                var viewModel =
+                    new SettingsViewModel(ant);
+                viewModel.PropertyChanged += OnPropertyChanged;
+                _settings.Add(viewModel);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка загрузки антенн: {ex.Message}");
+        }
+    }
+    
+    private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        RaisePropertyChanged(e.PropertyName);
     }
 }
