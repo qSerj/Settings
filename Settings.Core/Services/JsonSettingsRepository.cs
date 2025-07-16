@@ -11,7 +11,9 @@ public class JsonSettingsRepository :  ISettingsRepository
     private List<ThingsToSave> _things = new();
     private readonly SemaphoreSlim _fileLock = new(1, 1);
 
-    public JsonSettingsRepository(string filePath = "assets/antenna_definitions.json")
+    // Default path points to the sample things file located under the assets
+    // directory.
+    public JsonSettingsRepository(string filePath = "assets/things_to_save.json")
     {
         _filePath = filePath;
         _jsonOptions = new JsonSerializerOptions
