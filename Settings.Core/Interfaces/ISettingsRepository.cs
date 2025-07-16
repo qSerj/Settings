@@ -1,8 +1,10 @@
+using Settings.Core.Models;
+
 namespace Settings.Core.Interfaces;
 
 public interface ISettingsRepository
 {
-    public Task<List<Models.Settings>> GetAllAsync();
-    public Task SaveAsync(Models.Settings item);
-    Task DeleteAsync(Guid settingsId);
+    public Task<IEnumerable<ThingsToSave>> GetAllAsync();
+    public Task<ThingsToSave> SaveAsync(ThingsToSave item);
+    Task<bool> DeleteAsync(Guid settingsId);
 }

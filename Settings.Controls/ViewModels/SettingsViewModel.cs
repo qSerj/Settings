@@ -2,9 +2,9 @@ namespace Settings.Controls.ViewModels;
 
 public class SettingsViewModel : BindableBase
 {
-    private Core.Models.Settings _setings;
+    private Core.Models.ThingsToSave _setings;
 
-    public SettingsViewModel(Core.Models.Settings setings)
+    public SettingsViewModel(Core.Models.ThingsToSave setings)
     {
         _setings = setings;
     }

@@ -12,7 +12,12 @@ public class SettingsViewUserControlViewModel : BindableBase
     public SettingsViewUserControlViewModel(ISettingsRepository settingsRepository)
     {
         _settingsRepository = settingsRepository;
-        _settings = new ObservableCollection<SettingsViewModel>(_settingsRepository.GetAllAsync());
+        _settings = new ObservableCollection<SettingsViewModel>();
         Settings = new ReadOnlyObservableCollection<SettingsViewModel>(_settings);
+    }
+
+    public async Task LoadThings()
+    {
+        
     }
 }
