@@ -6,8 +6,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Settings.Controls.SettingsViewUserControl"
              x:DataType="viewModels:SettingsViewUserControlViewModel">
-    <Grid>
-        <DataGrid ItemsSource="{Binding Signals}"
+    <Grid Background="Aquamarine">
+        <DataGrid ItemsSource="{Binding Settings}"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
                   GridLinesVisibility="All"

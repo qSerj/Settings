@@ -23,21 +23,21 @@ public class SettingsViewUserControlViewModel : BindableBase
     {
         try
         {
-            var antennas = await _settingsRepository.GetAllAsync();
+            var things = await _settingsRepository.GetAllAsync();
 
             _settings.Clear();
 
-            foreach (var ant in antennas)
+            foreach (var t in things)
             {
                 var viewModel =
-                    new SettingsViewModel(ant);
+                    new SettingsViewModel(t);
                 viewModel.PropertyChanged += OnPropertyChanged;
                 _settings.Add(viewModel);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Ошибка загрузки антенн: {ex.Message}");
+            Console.WriteLine($"Ошибка загрузки: {ex.Message}");
         }
     }
     

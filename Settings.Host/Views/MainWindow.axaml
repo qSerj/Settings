@@ -3,8 +3,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Settings.Controls;assembly=Settings.Controls"
+        xmlns:host="clr-namespace:Settings.Host"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Settings.Host.Views.MainWindow"
-        Title="Settings.Host">
-    <controls:SettingsViewUserControl />   
+        Title="Settings.Host"
+        x:DataType="host:MainWindowViewModel">
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button >M+</Button>
+            <Button >MC</Button>
+            <Button >Set</Button>
+        </StackPanel>         
+        
+        <controls:SettingsViewUserControl DataContext="{Binding Settings}" />
+
+        <Panel>
+            <StackPanel>
+            </StackPanel>
+        </Panel>
+
+    </DockPanel>
+    
+    
 </Window>
