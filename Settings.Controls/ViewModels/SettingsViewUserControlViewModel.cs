@@ -34,6 +34,7 @@ public class SettingsViewUserControlViewModel : BindableBase
                 viewModel.PropertyChanged += OnPropertyChanged;
                 _settings.Add(viewModel);
             }
+            RaisePropertyChanged(nameof(Settings));
         }
         catch (Exception ex)
         {

@@ -6,9 +6,11 @@ namespace Settings.Host;
 
 public class MainWindowViewModel
 {
-    SettingsViewUserControlViewModel? _view;
+    private readonly SettingsViewUserControlViewModel _view;
 
-    public ReadOnlyObservableCollection<SettingsViewModel> Settings { get => _view?.Settings; }
+    public ReadOnlyObservableCollection<SettingsViewModel> Settings => _view.Settings;
+
+    public SettingsViewUserControlViewModel SettingsView => _view;
     
     public MainWindowViewModel(SettingsViewUserControlViewModel view)
     {

@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Settings.Controls;assembly=Settings.Controls"
         xmlns:host="clr-namespace:Settings.Host"
+        xmlns:views="clr-namespace:Settings.Controls.Views;assembly=Settings.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Settings.Host.Views.MainWindow"
         Title="Settings.Host"
@@ -15,7 +16,8 @@
             <Button >Set</Button>
         </StackPanel>         
         
-        <controls:SettingsViewUserControl DataContext="{Binding Settings}" />
+        <Panel><views:SettingsViewUserControl  DataContext="{Binding SettingsView}" /></Panel>
+        
 
         <Panel>
             <StackPanel>

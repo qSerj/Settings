@@ -13,4 +13,14 @@ public class SettingsViewModel : BindableBase
     {
         get => _setings.Type;
     }
+
+    public double S1
+    {
+        get => _setings.S1;
+    }
+
+    public double S2
+    {
+        get => _setings.S2;
+    }
 }

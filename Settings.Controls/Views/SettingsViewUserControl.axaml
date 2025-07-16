@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Settings.Controls.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Settings.Controls.SettingsViewUserControl"
-             x:DataType="viewModels:SettingsViewUserControlViewModel">
+             x:Class="Settings.Controls.Views.SettingsViewUserControl"
+             x:DataType="viewModels:SettingsViewUserControlViewModel"
+             x:CompileBindings="True">
+    
     <Grid Background="Aquamarine">
         <DataGrid ItemsSource="{Binding Settings}"
                   AutoGenerateColumns="False"
@@ -16,7 +18,6 @@
                   Margin="5"
                   FontStretch="Condensed"
                   FontSize="11">
-            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Тип" Binding="{Binding Type}" Width="auto"/>
                 <DataGridTextColumn Header="Пар. 1" Binding="{Binding S1}" Width="auto"/>
