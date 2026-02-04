@@ -1,0 +1,41 @@
+[
+  {
+    "Id": "00000000-0000-0000-0000-000000000001",
+    "Name": "Базовый режим",
+    "Mode": "Global",
+    "CreatedAt": "2026-02-01T08:00:00+00:00",
+    "UpdatedAt": "2026-02-01T08:00:00+00:00",
+    "Sections": [
+      {
+        "Name": "Антенна",
+        "Values": [
+          { "Key": "Gain", "Value": "12" },
+          { "Key": "Polarization", "Value": "Vertical" }
+        ]
+      },
+      {
+        "Name": "Передатчик",
+        "Values": [
+          { "Key": "Power", "Value": "5W" },
+          { "Key": "Frequency", "Value": "145.000MHz" }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "00000000-0000-0000-0000-000000000002",
+    "Name": "Режим мониторинга",
+    "Mode": "Observe",
+    "CreatedAt": "2026-02-02T10:30:00+00:00",
+    "UpdatedAt": "2026-02-02T10:30:00+00:00",
+    "Sections": [
+      {
+        "Name": "Приемник",
+        "Values": [
+          { "Key": "Bandwidth", "Value": "25kHz" },
+          { "Key": "NoiseReduction", "Value": "On" }
+        ]
+      }
+    ]
+  }
+]

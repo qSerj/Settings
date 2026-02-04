@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="assets\things_to_save.json">
+      <None Update="assets\settings_snapshots.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>

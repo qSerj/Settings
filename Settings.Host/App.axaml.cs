@@ -5,6 +5,7 @@ using Lamar;
 using Settings.Controls.ViewModels;
 using Settings.Core.Interfaces;
 using Settings.Core.Services;
+using Settings.Host.Services;
 using Settings.Host.Views;
 
 namespace Settings.Host;
@@ -12,7 +13,7 @@ namespace Settings.Host;
 public partial class App : Application
 {
     public static IContainer Container { get; private set; }
-    
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -23,10 +24,11 @@ public partial class App : Application
         Container = new Container(x =>
         {
             x.For<ISettingsRepository>().Use<JsonSettingsRepository>().Singleton();
+            x.For<ISettingsSource>().Use<MockSettingsSource>().Singleton();
             x.For<MainWindowViewModel>().Use<MainWindowViewModel>().Transient();
             x.For<SettingsViewUserControlViewModel>().Use<SettingsViewUserControlViewModel>().Transient();
         });
-        
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow();

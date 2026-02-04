@@ -4,7 +4,8 @@ namespace Settings.Core.Interfaces;
 
 public interface ISettingsRepository
 {
-    public Task<IEnumerable<ThingsToSave>> GetAllAsync();
-    public Task<ThingsToSave> SaveAsync(ThingsToSave item);
-    Task<bool> DeleteAsync(Guid settingsId);
+    Task<IEnumerable<SettingsSnapshot>> GetAllAsync();
+    Task<SettingsSnapshot?> GetByIdAsync(Guid id);
+    Task<SettingsSnapshot> SaveAsync(SettingsSnapshot item);
+    Task<bool> DeleteAsync(Guid id);
 }

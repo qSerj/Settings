@@ -10,21 +10,8 @@
         Title="Settings.Host"
         x:DataType="host:MainWindowViewModel">
     <DockPanel LastChildFill="True">
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Button >M+</Button>
-            <Button >MC</Button>
-            <Button >Set</Button>
-        </StackPanel>         
-        
-        <Panel><views:SettingsViewUserControl  DataContext="{Binding SettingsView}" /></Panel>
-        
-
-        <Panel>
-            <StackPanel>
-            </StackPanel>
-        </Panel>
-
+        <views:SettingsViewUserControl DataContext="{Binding SettingsView}" />
     </DockPanel>
-    
-    
+
+
 </Window>
