@@ -12,7 +12,7 @@ namespace Settings.Host;
 
 public partial class App : Application
 {
-    public static IContainer Container { get; private set; }
+    public static IContainer Container { get; private set; } = null!;
 
     public override void Initialize()
     {
