@@ -18,24 +18,57 @@ public class MockSettingsSource : ISettingsSource
             Name = $"Снимок {_counter}",
             Mode = _counter % 2 == 0 ? "Observe" : "Global",
             UpdatedAt = DateTimeOffset.UtcNow,
-            Sections = new List<SettingsSection>
+            Radio = new RadioSettings
             {
-                new()
+                Antenna = new AntennaSettings
                 {
-                    Name = "Антенна",
-                    Values = new List<SettingValue>
+                    AntennaId = $"ANT-{_counter:000}",
+                    Tuning =
                     {
-                        new() { Key = "Gain", Value = (10 + _counter).ToString() },
-                        new() { Key = "Polarization", Value = "Vertical" }
+                        new SettingValue { Key = "Azimuth", Value = (110 + _counter).ToString() },
+                        new SettingValue { Key = "Elevation", Value = "15" }
+                    },
+                    Reference =
+                    {
+                        new SettingValue { Key = "Type", Value = "Yagi" },
+                        new SettingValue { Key = "Polarization", Value = "Vertical" }
                     }
                 },
-                new()
+                Rpu = new RpuSettings
                 {
-                    Name = "Передатчик",
-                    Values = new List<SettingValue>
+                    Parameters =
                     {
-                        new() { Key = "Power", Value = $"{5 + _counter}W" },
-                        new() { Key = "Frequency", Value = "145.000MHz" }
+                        new SettingValue { Key = "Bandwidth", Value = "25kHz" },
+                        new SettingValue { Key = "Gain", Value = (10 + _counter).ToString() }
+                    }
+                },
+                Detector = new DetectorSettings
+                {
+                    Parameters =
+                    {
+                        new SettingValue { Key = "Threshold", Value = "0.42" }
+                    }
+                },
+                Demodulator = new DemodulatorSettings
+                {
+                    Sections =
+                    {
+                        new SettingsSection
+                        {
+                            Name = "PLL",
+                            Values =
+                            {
+                                new SettingValue { Key = "LockRange", Value = "2.5kHz" },
+                                new SettingValue { Key = "LoopGain", Value = "1.1" }
+                            }
+                        }
+                    }
+                },
+                Decoder = new DecoderSettings
+                {
+                    Parameters =
+                    {
+                        new SettingValue { Key = "Scheme", Value = "Viterbi" }
                     }
                 }
             }

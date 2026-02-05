@@ -46,12 +46,11 @@ public class JsonSettingsRepositoryTests
             {
                 Name = "Test",
                 Mode = "Global",
-                Sections =
+                Radio = new RadioSettings
                 {
-                    new SettingsSection
+                    Rpu = new RpuSettings
                     {
-                        Name = "Section",
-                        Values = { new SettingValue { Key = "Gain", Value = "10" } }
+                        Parameters = { new SettingValue { Key = "Gain", Value = "10" } }
                     }
                 }
             };
@@ -90,7 +89,14 @@ public class JsonSettingsRepositoryTests
                          "Mode": "Global",
                          "CreatedAt": "2026-02-01T08:00:00+00:00",
                          "UpdatedAt": "2026-02-01T08:00:00+00:00",
-                         "Sections": []
+                         "Radio": {
+                           "Rpu": {
+                             "IsPresent": true,
+                             "IsRelevant": true,
+                             "Parameters": [],
+                             "Sections": []
+                           }
+                         }
                        }
                      ]
                      """;

@@ -5,22 +5,64 @@
     "Mode": "Global",
     "CreatedAt": "2026-02-01T08:00:00+00:00",
     "UpdatedAt": "2026-02-01T08:00:00+00:00",
-    "Sections": [
-      {
-        "Name": "Антенна",
-        "Values": [
-          { "Key": "Gain", "Value": "12" },
+    "Radio": {
+      "Antenna": {
+        "IsPresent": true,
+        "IsRelevant": true,
+        "Parameters": [],
+        "Sections": [],
+        "AntennaId": "ANT-001",
+        "Tuning": [
+          { "Key": "Azimuth", "Value": "120" },
+          { "Key": "Elevation", "Value": "15" }
+        ],
+        "Reference": [
+          { "Key": "Type", "Value": "Yagi" },
           { "Key": "Polarization", "Value": "Vertical" }
         ]
       },
-      {
-        "Name": "Передатчик",
-        "Values": [
-          { "Key": "Power", "Value": "5W" },
-          { "Key": "Frequency", "Value": "145.000MHz" }
+      "Rpu": {
+        "IsPresent": true,
+        "IsRelevant": true,
+        "Parameters": [
+          { "Key": "Bandwidth", "Value": "25kHz" },
+          { "Key": "Gain", "Value": "10" }
+        ],
+        "Sections": []
+      },
+      "Detector": {
+        "IsPresent": true,
+        "IsRelevant": true,
+        "Parameters": [
+          { "Key": "Threshold", "Value": "0.42" }
+        ],
+        "Sections": []
+      },
+      "Demodulator": {
+        "IsPresent": true,
+        "IsRelevant": true,
+        "Parameters": [
+          { "Key": "Mode", "Value": "QAM" }
+        ],
+        "Sections": [
+          {
+            "Name": "PLL",
+            "Values": [
+              { "Key": "LockRange", "Value": "2.5kHz" }
+            ],
+            "Sections": []
+          }
         ]
+      },
+      "Decoder": {
+        "IsPresent": true,
+        "IsRelevant": true,
+        "Parameters": [
+          { "Key": "Scheme", "Value": "Viterbi" }
+        ],
+        "Sections": []
       }
-    ]
+    }
   },
   {
     "Id": "00000000-0000-0000-0000-000000000002",
@@ -28,14 +70,50 @@
     "Mode": "Observe",
     "CreatedAt": "2026-02-02T10:30:00+00:00",
     "UpdatedAt": "2026-02-02T10:30:00+00:00",
-    "Sections": [
-      {
-        "Name": "Приемник",
-        "Values": [
-          { "Key": "Bandwidth", "Value": "25kHz" },
-          { "Key": "NoiseReduction", "Value": "On" }
+    "Radio": {
+      "Antenna": {
+        "IsPresent": true,
+        "IsRelevant": false,
+        "Parameters": [],
+        "Sections": [],
+        "AntennaId": "ANT-014",
+        "Tuning": [
+          { "Key": "Azimuth", "Value": "90" },
+          { "Key": "Elevation", "Value": "12" }
+        ],
+        "Reference": [
+          { "Key": "Type", "Value": "LogPeriodic" }
         ]
+      },
+      "Rpu": {
+        "IsPresent": true,
+        "IsRelevant": true,
+        "Parameters": [
+          { "Key": "Bandwidth", "Value": "12.5kHz" },
+          { "Key": "NoiseReduction", "Value": "On" }
+        ],
+        "Sections": []
+      },
+      "Detector": {
+        "IsPresent": true,
+        "IsRelevant": true,
+        "Parameters": [
+          { "Key": "Threshold", "Value": "0.35" }
+        ],
+        "Sections": []
+      },
+      "Demodulator": {
+        "IsPresent": true,
+        "IsRelevant": false,
+        "Parameters": [],
+        "Sections": []
+      },
+      "Decoder": {
+        "IsPresent": false,
+        "IsRelevant": false,
+        "Parameters": [],
+        "Sections": []
       }
-    ]
+    }
   }
 ]

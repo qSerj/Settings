@@ -33,7 +33,7 @@
                 <DataGridTextColumn Header="Обновлено"
                                     Binding="{Binding UpdatedAt, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}"
                                     Width="*" />
-                <DataGridTextColumn Header="Разделы" Binding="{Binding SectionsSummary}" Width="2*" />
+                <DataGridTextColumn Header="Цепочка" Binding="{Binding SectionsSummary}" Width="2*" />
             </DataGrid.Columns>
         </DataGrid>
         

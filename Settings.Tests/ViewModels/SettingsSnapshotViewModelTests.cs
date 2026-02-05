@@ -20,24 +20,32 @@ public class SettingsSnapshotViewModelTests
     {
         var snapshot = new SettingsSnapshot
         {
-            Sections =
+            Radio = new RadioSettings
             {
-                new SettingsSection
+                Antenna = new AntennaSettings
                 {
-                    Name = "Антенна",
-                    Values = { new SettingValue { Key = "Gain", Value = "10" },
-                               new SettingValue { Key = "Mode", Value = "Auto" } }
+                    Tuning =
+                    {
+                        new SettingValue { Key = "Azimuth", Value = "10" },
+                        new SettingValue { Key = "Elevation", Value = "5" }
+                    },
+                    Reference =
+                    {
+                        new SettingValue { Key = "Type", Value = "Yagi" }
+                    }
                 },
-                new SettingsSection
+                Rpu = new RpuSettings
                 {
-                    Name = "Передатчик",
-                    Values = { new SettingValue { Key = "Power", Value = "5W" } }
+                    Parameters =
+                    {
+                        new SettingValue { Key = "Gain", Value = "10" }
+                    }
                 }
             }
         };
 
         var vm = new SettingsSnapshotViewModel(snapshot);
 
-        Assert.Equal("Антенна: 2; Передатчик: 1", vm.SectionsSummary);
+        Assert.Equal("Antenna: 3; Rpu: 1", vm.SectionsSummary);
     }
 }

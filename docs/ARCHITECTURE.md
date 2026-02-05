@@ -4,7 +4,8 @@
 
 ## Слои
 `Settings.Core`
-- Модели: `SettingsSnapshot`, `SettingsSection`, `SettingValue`
+- Модели: `SettingsSnapshot`, `RadioSettings`, `SettingsBlock` и его узлы,
+  `SettingsSection`, `SettingValue`
 - Репозиторий: `ISettingsRepository` + `JsonSettingsRepository`
 - Источник текущих настроек: `ISettingsSource`
 - Применение: `ISettingsApplier` + `ISettingsApplyStrategy`
@@ -22,10 +23,20 @@
 ## Данные
 Снимок:
 - `Name`, `Mode`, `CreatedAt`, `UpdatedAt`
-- `Sections`: список логических секций с ключами/значениями
+- `Radio`: цепочка узлов `Antenna`, `Rpu`, `Detector`, `Demodulator`, `Decoder`
 
-Сводка секций:
-- формируется в `SettingsSnapshotViewModel.SectionsSummary`
+Узел тракта (`SettingsBlock`):
+- `IsPresent`, `IsRelevant` — флаги наличия и актуальности
+- `Parameters` — плоский набор параметров
+- `Sections` — вложенные секции для сложных случаев
+
+Антенна (`AntennaSettings`) дополнительно:
+- `AntennaId` — ссылка на отдельное хранилище антенн
+- `Tuning` — минимальный набор чисел для настройки
+- `Reference` — справочные параметры
+
+Сводка цепочки:
+- формируется в `SettingsSnapshotViewModel.SectionsSummary` как сводка по узлам цепочки
 
 ## Хранение
 `JsonSettingsRepository` сохраняет данные в:
@@ -59,9 +70,9 @@
 
 `Global`
 1. Подготовка
-2. Применение настроек (секции: Антенна, Передатчик)
+2. Применение настроек (узлы: Antenna, Rpu, Detector, Demodulator, Decoder)
 3. Завершение
 
 `Observe`
 1. Подготовка
-2. Применение мониторинга (секции: Приемник)
+2. Применение мониторинга (узлы: Rpu, Detector)
