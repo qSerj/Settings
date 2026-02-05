@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using Avalonia.Headless.XUnit;
 using Settings.Controls.ViewModels;
 using Settings.Core.Interfaces;

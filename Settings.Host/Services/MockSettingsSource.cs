@@ -23,52 +23,53 @@ public class MockSettingsSource : ISettingsSource
                 Antenna = new AntennaSettings
                 {
                     AntennaId = $"ANT-{_counter:000}",
-                    Tuning =
-                    {
-                        new SettingValue { Key = "Azimuth", Value = (110 + _counter).ToString() },
-                        new SettingValue { Key = "Elevation", Value = "15" }
-                    },
                     Reference =
                     {
-                        new SettingValue { Key = "Type", Value = "Yagi" },
-                        new SettingValue { Key = "Polarization", Value = "Vertical" }
+                        new SettingValue { Key = "Антенна", Value = "АРК-3" },
+                        new SettingValue { Key = "МШПР", Value = "МШПР-0408" },
+                        new SettingValue { Key = "Диапазон", Value = "4.00-5.00 ГГц" },
+                        new SettingValue { Key = "Поляризация", Value = "V" }
                     }
                 },
                 Rpu = new RpuSettings
                 {
                     Parameters =
                     {
-                        new SettingValue { Key = "Bandwidth", Value = "25kHz" },
-                        new SettingValue { Key = "Gain", Value = (10 + _counter).ToString() }
+                        new SettingValue { Key = "Частота приемника, кГц", Value = "349995.059" },
+                        new SettingValue { Key = "Аттенюатор", Value = "0" },
+                        new SettingValue { Key = "Перегруз АЦП", Value = "0" }
                     }
                 },
                 Detector = new DetectorSettings
                 {
                     Parameters =
                     {
-                        new SettingValue { Key = "Threshold", Value = "0.42" }
+                        new SettingValue { Key = "Несущая частота, кГц", Value = "349995.148" },
+                        new SettingValue { Key = "Тактовая частота, кГц", Value = "6099.998" },
+                        new SettingValue { Key = "ФАПЧ", Value = "1/400" },
+                        new SettingValue { Key = "Фильтр", Value = "0.4" },
+                        new SettingValue { Key = "Корректор", Value = "Отключен" }
                     }
                 },
                 Demodulator = new DemodulatorSettings
                 {
-                    Sections =
+                    Parameters =
                     {
-                        new SettingsSection
-                        {
-                            Name = "PLL",
-                            Values =
-                            {
-                                new SettingValue { Key = "LockRange", Value = "2.5kHz" },
-                                new SettingValue { Key = "LoopGain", Value = "1.1" }
-                            }
-                        }
+                        new SettingValue { Key = "Кодер", Value = "ISU2" },
+                        new SettingValue { Key = "Модуляция", Value = "ACM" },
+                        new SettingValue { Key = "Пилоты", Value = "..." },
+                        new SettingValue { Key = "Инверсия спектра", Value = "Вкл" },
+                        new SettingValue { Key = "ОСШ", Value = "29.6" }
                     }
                 },
                 Decoder = new DecoderSettings
                 {
                     Parameters =
                     {
-                        new SettingValue { Key = "Scheme", Value = "Viterbi" }
+                        new SettingValue { Key = "Кодер", Value = "ISU2" },
+                        new SettingValue { Key = "Итераций", Value = "127" },
+                        new SettingValue { Key = "Температура", Value = "46" },
+                        new SettingValue { Key = "Сигнатура", Value = "Вкл" }
                     }
                 }
             }

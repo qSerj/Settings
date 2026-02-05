@@ -33,7 +33,11 @@
                 <DataGridTextColumn Header="Обновлено"
                                     Binding="{Binding UpdatedAt, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}"
                                     Width="*" />
-                <DataGridTextColumn Header="Цепочка" Binding="{Binding SectionsSummary}" Width="2*" />
+                <DataGridTextColumn Header="Антенна" Binding="{Binding AntennaSummary}" Width="2*" />
+                <DataGridTextColumn Header="Приемник" Binding="{Binding RpuSummary}" Width="2*" />
+                <DataGridTextColumn Header="Детектор" Binding="{Binding DetectorSummary}" Width="2*" />
+                <DataGridTextColumn Header="СКК" Binding="{Binding DemodulatorSummary}" Width="2*" />
+                <DataGridTextColumn Header="Декодер" Binding="{Binding DecoderSummary}" Width="2*" />
             </DataGrid.Columns>
         </DataGrid>
         

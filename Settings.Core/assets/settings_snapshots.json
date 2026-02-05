@@ -12,21 +12,21 @@
         "Parameters": [],
         "Sections": [],
         "AntennaId": "ANT-001",
-        "Tuning": [
-          { "Key": "Azimuth", "Value": "120" },
-          { "Key": "Elevation", "Value": "15" }
-        ],
+        "Tuning": [],
         "Reference": [
-          { "Key": "Type", "Value": "Yagi" },
-          { "Key": "Polarization", "Value": "Vertical" }
+          { "Key": "Антенна", "Value": "АРК-3" },
+          { "Key": "МШПР", "Value": "МШПР-0408" },
+          { "Key": "Диапазон", "Value": "4.00-5.00 ГГц" },
+          { "Key": "Поляризация", "Value": "V" }
         ]
       },
       "Rpu": {
         "IsPresent": true,
         "IsRelevant": true,
         "Parameters": [
-          { "Key": "Bandwidth", "Value": "25kHz" },
-          { "Key": "Gain", "Value": "10" }
+          { "Key": "Частота приемника, кГц", "Value": "349995.059" },
+          { "Key": "Аттенюатор", "Value": "0" },
+          { "Key": "Перегруз АЦП", "Value": "0" }
         ],
         "Sections": []
       },
@@ -34,7 +34,11 @@
         "IsPresent": true,
         "IsRelevant": true,
         "Parameters": [
-          { "Key": "Threshold", "Value": "0.42" }
+          { "Key": "Несущая частота, кГц", "Value": "349995.148" },
+          { "Key": "Тактовая частота, кГц", "Value": "6099.998" },
+          { "Key": "ФАПЧ", "Value": "1/400" },
+          { "Key": "Фильтр", "Value": "0.4" },
+          { "Key": "Корректор", "Value": "Отключен" }
         ],
         "Sections": []
       },
@@ -42,23 +46,22 @@
         "IsPresent": true,
         "IsRelevant": true,
         "Parameters": [
-          { "Key": "Mode", "Value": "QAM" }
+          { "Key": "Кодер", "Value": "ISU2" },
+          { "Key": "Модуляция", "Value": "ACM" },
+          { "Key": "Пилоты", "Value": "..." },
+          { "Key": "Инверсия спектра", "Value": "Вкл" },
+          { "Key": "ОСШ", "Value": "29.6" }
         ],
-        "Sections": [
-          {
-            "Name": "PLL",
-            "Values": [
-              { "Key": "LockRange", "Value": "2.5kHz" }
-            ],
-            "Sections": []
-          }
-        ]
+        "Sections": []
       },
       "Decoder": {
         "IsPresent": true,
         "IsRelevant": true,
         "Parameters": [
-          { "Key": "Scheme", "Value": "Viterbi" }
+          { "Key": "Кодер", "Value": "ISU2" },
+          { "Key": "Итераций", "Value": "127" },
+          { "Key": "Температура", "Value": "46" },
+          { "Key": "Сигнатура", "Value": "Вкл" }
         ],
         "Sections": []
       }
@@ -77,20 +80,21 @@
         "Parameters": [],
         "Sections": [],
         "AntennaId": "ANT-014",
-        "Tuning": [
-          { "Key": "Azimuth", "Value": "90" },
-          { "Key": "Elevation", "Value": "12" }
-        ],
+        "Tuning": [],
         "Reference": [
-          { "Key": "Type", "Value": "LogPeriodic" }
+          { "Key": "Антенна", "Value": "АРК-3" },
+          { "Key": "МШПР", "Value": "МШПР-0408" },
+          { "Key": "Диапазон", "Value": "4.00-5.00 ГГц" },
+          { "Key": "Поляризация", "Value": "V" }
         ]
       },
       "Rpu": {
         "IsPresent": true,
         "IsRelevant": true,
         "Parameters": [
-          { "Key": "Bandwidth", "Value": "12.5kHz" },
-          { "Key": "NoiseReduction", "Value": "On" }
+          { "Key": "Частота приемника, кГц", "Value": "349995.150" },
+          { "Key": "Аттенюатор", "Value": "0" },
+          { "Key": "Перегруз АЦП", "Value": "0" }
         ],
         "Sections": []
       },
@@ -98,7 +102,11 @@
         "IsPresent": true,
         "IsRelevant": true,
         "Parameters": [
-          { "Key": "Threshold", "Value": "0.35" }
+          { "Key": "Несущая частота, кГц", "Value": "349995.148" },
+          { "Key": "Тактовая частота, кГц", "Value": "6099.998" },
+          { "Key": "ФАПЧ", "Value": "1/400" },
+          { "Key": "Фильтр", "Value": "0.4" },
+          { "Key": "Корректор", "Value": "Отключен" }
         ],
         "Sections": []
       },
