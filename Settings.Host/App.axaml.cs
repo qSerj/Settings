@@ -25,6 +25,9 @@ public partial class App : Application
         {
             x.For<ISettingsRepository>().Use<JsonSettingsRepository>().Singleton();
             x.For<ISettingsSource>().Use<MockSettingsSource>().Singleton();
+            x.For<ISettingsApplier>().Use<SettingsApplier>().Singleton();
+            x.For<ISettingsApplyStrategy>().Add<GlobalModeApplyStrategy>().Singleton();
+            x.For<ISettingsApplyStrategy>().Add<ObserveModeApplyStrategy>().Singleton();
             x.For<MainWindowViewModel>().Use<MainWindowViewModel>().Transient();
             x.For<SettingsViewUserControlViewModel>().Use<SettingsViewUserControlViewModel>().Transient();
         });

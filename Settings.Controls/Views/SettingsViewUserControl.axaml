@@ -8,7 +8,7 @@
              x:DataType="viewModels:SettingsViewUserControlViewModel"
              x:CompileBindings="True">
 
-    <Grid RowDefinitions="Auto,Auto,*" Background="Aquamarine">
+    <Grid RowDefinitions="Auto,Auto,Auto,*">
         <StackPanel Orientation="Horizontal" Margin="6">
             <Button Content="Снять" Command="{Binding SaveSnapshotCommand}" Margin="0,0,6,0" />
             <Button Content="Применить" Command="{Binding ApplyCommand}" Margin="0,0,6,0" />
@@ -18,7 +18,20 @@
 
         <TextBlock Grid.Row="1" Text="{Binding StatusMessage}" Margin="6,0,6,4" FontSize="11" />
 
-        <DataGrid Grid.Row="2"
+        <ListBox Grid.Row="2"
+                 ItemsSource="{Binding ApplySteps}"
+                 BorderThickness="1"
+                 BorderBrush="Gray"
+                 Margin="6,0,6,6"
+                 MaxHeight="110">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Display}" FontSize="11" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <DataGrid Grid.Row="3"
                   ItemsSource="{Binding Settings}"
                   SelectedItem="{Binding Selected, Mode=TwoWay}"
                   AutoGenerateColumns="False"
@@ -26,6 +39,7 @@
                   GridLinesVisibility="All"
                   BorderThickness="1"
                   BorderBrush="Gray"
+                  Background="Aquamarine"
                   Margin="6"
                   FontStretch="Condensed"
                   FontSize="11">
