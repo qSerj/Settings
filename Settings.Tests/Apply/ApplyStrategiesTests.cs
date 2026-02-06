@@ -1,3 +1,4 @@
+using System;
 using Settings.Core.Interfaces;
 using Settings.Core.Models;
 using Settings.Host.Services;
@@ -10,7 +11,18 @@ public class ApplyStrategiesTests
     [Fact]
     public async Task GlobalModeStrategy_ReportsStepsInOrder()
     {
-        var snapshot = new SettingsSnapshot { Mode = "Global" };
+        var snapshot = new SettingsSnapshot
+        {
+            Mode = "Global",
+            Radio = new RadioSettings
+            {
+                Antenna = new AntennaSettings(),
+                Rpu = new RpuSettings(),
+                Detector = new DetectorSettings(),
+                Demodulator = new DemodulatorSettings(),
+                Decoder = new DecoderSettings()
+            }
+        };
         var reporter = new CaptureReporter();
         var source = new TestSettingsSource();
         var strategy = new GlobalModeApplyStrategy(source);
@@ -23,8 +35,16 @@ public class ApplyStrategiesTests
             {
                 "Start:Подготовка",
                 "Ok:Подготовка",
-                "Start:Применение настроек",
-                "Ok:Применение настроек",
+                "Start:Антенна",
+                "Ok:Антенна",
+                "Start:Приемник",
+                "Ok:Приемник",
+                "Start:Детектор",
+                "Ok:Детектор",
+                "Start:Демодулятор",
+                "Ok:Демодулятор",
+                "Start:Декодер",
+                "Ok:Декодер",
                 "Start:Завершение",
                 "Ok:Завершение"
             },
@@ -34,7 +54,15 @@ public class ApplyStrategiesTests
     [Fact]
     public async Task ObserveModeStrategy_ReportsStepsInOrder()
     {
-        var snapshot = new SettingsSnapshot { Mode = "Observe" };
+        var snapshot = new SettingsSnapshot
+        {
+            Mode = "Observe",
+            Radio = new RadioSettings
+            {
+                Rpu = new RpuSettings(),
+                Detector = new DetectorSettings()
+            }
+        };
         var reporter = new CaptureReporter();
         var source = new TestSettingsSource();
         var strategy = new ObserveModeApplyStrategy(source);
@@ -47,8 +75,10 @@ public class ApplyStrategiesTests
             {
                 "Start:Подготовка",
                 "Ok:Подготовка",
-                "Start:Применение мониторинга",
-                "Ok:Применение мониторинга"
+                "Start:Приемник",
+                "Ok:Приемник",
+                "Start:Детектор",
+                "Ok:Детектор"
             },
             reporter.Events);
     }
@@ -56,34 +86,79 @@ public class ApplyStrategiesTests
     [Fact]
     public async Task Strategy_WhenApplyThrows_ReturnsFailed()
     {
-        var snapshot = new SettingsSnapshot { Mode = "Global" };
+        var snapshot = new SettingsSnapshot
+        {
+            Mode = "Global",
+            Radio = new RadioSettings
+            {
+                Antenna = new AntennaSettings(),
+                Rpu = new RpuSettings()
+            }
+        };
         var reporter = new CaptureReporter();
-        var source = new TestSettingsSource { ThrowOnApply = true };
+        var source = new TestSettingsSource { ThrowOnNode = "Приемник" };
         var strategy = new GlobalModeApplyStrategy(source);
 
         var result = await strategy.ApplyAsync(snapshot, reporter, CancellationToken.None);
 
         Assert.False(result.Success);
         Assert.Contains("boom", result.Error);
-        Assert.Contains("Fail:Применение настроек", reporter.Events);
+        Assert.Contains("Fail:Приемник", reporter.Events);
+    }
+
+    [Fact]
+    public async Task GlobalModeStrategy_WhenNodeNotPresent_SkipsNode()
+    {
+        var snapshot = new SettingsSnapshot
+        {
+            Mode = "Global",
+            Radio = new RadioSettings
+            {
+                Antenna = new AntennaSettings(),
+                Rpu = new RpuSettings { IsPresent = false },
+                Detector = new DetectorSettings()
+            }
+        };
+        var reporter = new CaptureReporter();
+        var source = new TestSettingsSource();
+        var strategy = new GlobalModeApplyStrategy(source);
+
+        var result = await strategy.ApplyAsync(snapshot, reporter, CancellationToken.None);
+
+        Assert.True(result.Success);
+        Assert.Contains("Start:Приемник (пропущено)", reporter.Events);
+        Assert.DoesNotContain(source.AppliedNodes, n => n == "Приемник");
     }
 
     private sealed class TestSettingsSource : ISettingsSource
     {
-        public bool ThrowOnApply { get; set; }
+        public string? ThrowOnNode { get; set; }
+        public List<string> AppliedNodes { get; } = new();
 
         public Task<SettingsSnapshot> GetCurrentAsync() =>
             Task.FromResult(new SettingsSnapshot());
 
         public Task ApplyAsync(SettingsSnapshot snapshot)
         {
-            if (ThrowOnApply)
+            var node = DetectNode(snapshot.Radio);
+            AppliedNodes.Add(node);
+
+            if (!string.IsNullOrWhiteSpace(ThrowOnNode) &&
+                string.Equals(node, ThrowOnNode, StringComparison.OrdinalIgnoreCase))
             {
                 throw new InvalidOperationException("boom");
             }
 
             return Task.CompletedTask;
         }
+
+        private static string DetectNode(RadioSettings radio) =>
+            radio.Antenna != null ? "Антенна" :
+            radio.Rpu != null ? "Приемник" :
+            radio.Detector != null ? "Детектор" :
+            radio.Demodulator != null ? "Демодулятор" :
+            radio.Decoder != null ? "Декодер" :
+            "Unknown";
     }
 
     private sealed class CaptureReporter : IApplyReporter

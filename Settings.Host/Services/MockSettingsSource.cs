@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Settings.Core.Interfaces;
 using Settings.Core.Models;
+using Settings.Core.Services;
 
 namespace Settings.Host.Services;
 
-public class MockSettingsSource : ISettingsSource
+public class MockSettingsSource : SettingsSourceBase
 {
     private int _counter;
 
-    public Task<SettingsSnapshot> GetCurrentAsync()
+    public override Task<SettingsSnapshot> GetCurrentAsync()
     {
         _counter++;
         var snapshot = new SettingsSnapshot
@@ -78,8 +78,5 @@ public class MockSettingsSource : ISettingsSource
         return Task.FromResult(snapshot);
     }
 
-    public Task ApplyAsync(SettingsSnapshot snapshot)
-    {
-        return Task.CompletedTask;
-    }
+    // ApplyAsync uses base logic; this mock only generates snapshots.
 }
