@@ -76,3 +76,15 @@
 `Observe`
 1. Подготовка
 2. Применение мониторинга (узлы: Rpu, Detector)
+
+## Integration Layer
+`Settings.Integration` contains reusable wiring and infrastructure that is needed
+when embedding `SettingsViewUserControl` into another host application:
+- apply strategies by mode (`GlobalModeApplyStrategy`, `ObserveModeApplyStrategy`)
+- logging decorator for `ISettingsApplier` (`LoggingSettingsApplier`)
+- Lamar extension (`AddSettingsIntegration`) to register strategies and applier
+- shared logging bootstrap (`SettingsApplyLoggingConfigurator`)
+
+`Settings.Host` remains a lightweight demo app:
+- keeps only `MockSettingsSource`, window composition, and app startup
+- consumes `Settings.Integration` instead of owning reusable apply infrastructure

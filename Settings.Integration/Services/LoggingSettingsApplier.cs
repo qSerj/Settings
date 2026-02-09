@@ -5,7 +5,7 @@ using Settings.Core.Models;
 using Settings.Core.Services;
 using Serilog;
 
-namespace Settings.Host.Services;
+namespace Settings.Integration.Services;
 
 public class LoggingSettingsApplier : ISettingsApplier
 {

@@ -1,7 +1,7 @@
 using System;
 using Settings.Core.Interfaces;
 using Settings.Core.Models;
-using Settings.Host.Services;
+using Settings.Integration.Services;
 using Xunit;
 
 namespace Settings.Tests.Apply;

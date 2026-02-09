@@ -21,7 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Settings.Core\Settings.Core.csproj" />
     <ProjectReference Include="..\Settings.Controls\Settings.Controls.csproj" />
-    <ProjectReference Include="..\Settings.Host\Settings.Host.csproj" />
+    <ProjectReference Include="..\Settings.Integration\Settings.Integration.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,16 +5,16 @@ using Settings.Core.Interfaces;
 using Settings.Core.Models;
 using Serilog;
 
-namespace Settings.Host.Services;
+namespace Settings.Integration.Services;
 
-public class ObserveModeApplyStrategy : ISettingsApplyStrategy
+public class GlobalModeApplyStrategy : ISettingsApplyStrategy
 {
-    private static readonly ILogger Logger = Log.ForContext<ObserveModeApplyStrategy>();
+    private static readonly ILogger Logger = Log.ForContext<GlobalModeApplyStrategy>();
     private readonly ISettingsSource _settingsSource;
 
-    public string Mode => "Observe";
+    public string Mode => "Global";
 
-    public ObserveModeApplyStrategy(ISettingsSource settingsSource)
+    public GlobalModeApplyStrategy(ISettingsSource settingsSource)
     {
         _settingsSource = settingsSource;
     }
@@ -22,12 +22,13 @@ public class ObserveModeApplyStrategy : ISettingsApplyStrategy
     public async Task<ApplyResult> ApplyAsync(SettingsSnapshot snapshot, IApplyReporter reporter, CancellationToken ct)
     {
         const string stepInit = "Подготовка";
+        const string stepFinalize = "Завершение";
 
         var currentStep = stepInit;
 
         try
         {
-            Logger.Information("Observe apply strategy started for snapshot {SnapshotId}", snapshot.Id);
+            Logger.Information("Global apply strategy started for snapshot {SnapshotId}", snapshot.Id);
             reporter.StepStarted(stepInit);
             await Task.Yield();
             reporter.StepSucceeded(stepInit);
@@ -35,6 +36,14 @@ public class ObserveModeApplyStrategy : ISettingsApplyStrategy
             var radio = snapshot.Radio ?? new RadioSettings();
 
             var result = await ApplyNodeAsync(
+                "Антенна",
+                snapshot,
+                radio.Antenna,
+                r => r.Antenna = radio.Antenna,
+                reporter);
+            if (result != null) return result;
+
+            result = await ApplyNodeAsync(
                 "Приемник",
                 snapshot,
                 radio.Rpu,
@@ -50,12 +59,33 @@ public class ObserveModeApplyStrategy : ISettingsApplyStrategy
                 reporter);
             if (result != null) return result;
 
-            Logger.Information("Observe apply strategy finished successfully for snapshot {SnapshotId}", snapshot.Id);
+            result = await ApplyNodeAsync(
+                "Демодулятор",
+                snapshot,
+                radio.Demodulator,
+                r => r.Demodulator = radio.Demodulator,
+                reporter);
+            if (result != null) return result;
+
+            result = await ApplyNodeAsync(
+                "Декодер",
+                snapshot,
+                radio.Decoder,
+                r => r.Decoder = radio.Decoder,
+                reporter);
+            if (result != null) return result;
+
+            currentStep = stepFinalize;
+            reporter.StepStarted(stepFinalize);
+            await Task.Yield();
+            reporter.StepSucceeded(stepFinalize);
+            Logger.Information("Global apply strategy finished successfully for snapshot {SnapshotId}", snapshot.Id);
+
             return ApplyResult.Ok();
         }
         catch (Exception ex)
         {
-            Logger.Error(ex, "Observe apply strategy failed at step {Step} for snapshot {SnapshotId}", currentStep, snapshot.Id);
+            Logger.Error(ex, "Global apply strategy failed at step {Step} for snapshot {SnapshotId}", currentStep, snapshot.Id);
             reporter.StepFailed(currentStep, ex.Message);
             return ApplyResult.Failed(ex.Message, currentStep);
         }
