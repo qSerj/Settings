@@ -3,11 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Settings.Core.Interfaces;
 using Settings.Core.Models;
+using Serilog;
 
 namespace Settings.Host.Services;
 
 public class ObserveModeApplyStrategy : ISettingsApplyStrategy
 {
+    private static readonly ILogger Logger = Log.ForContext<ObserveModeApplyStrategy>();
     private readonly ISettingsSource _settingsSource;
 
     public string Mode => "Observe";
@@ -25,6 +27,7 @@ public class ObserveModeApplyStrategy : ISettingsApplyStrategy
 
         try
         {
+            Logger.Information("Observe apply strategy started for snapshot {SnapshotId}", snapshot.Id);
             reporter.StepStarted(stepInit);
             await Task.Yield();
             reporter.StepSucceeded(stepInit);
@@ -47,10 +50,12 @@ public class ObserveModeApplyStrategy : ISettingsApplyStrategy
                 reporter);
             if (result != null) return result;
 
+            Logger.Information("Observe apply strategy finished successfully for snapshot {SnapshotId}", snapshot.Id);
             return ApplyResult.Ok();
         }
         catch (Exception ex)
         {
+            Logger.Error(ex, "Observe apply strategy failed at step {Step} for snapshot {SnapshotId}", currentStep, snapshot.Id);
             reporter.StepFailed(currentStep, ex.Message);
             return ApplyResult.Failed(ex.Message, currentStep);
         }
@@ -68,6 +73,7 @@ public class ObserveModeApplyStrategy : ISettingsApplyStrategy
     {
         if (!ShouldApply(block))
         {
+            Logger.Information("Skipping node {Node} for snapshot {SnapshotId}: not present or not relevant", title, snapshot.Id);
             var skippedTitle = $"{title} (пропущено)";
             reporter.StepStarted(skippedTitle);
             await Task.Yield();
@@ -75,15 +81,18 @@ public class ObserveModeApplyStrategy : ISettingsApplyStrategy
             return null;
         }
 
+        Logger.Information("Applying node {Node} for snapshot {SnapshotId}", title, snapshot.Id);
         reporter.StepStarted(title);
         try
         {
             await _settingsSource.ApplyAsync(BuildSnapshotForNode(snapshot, setNode));
             reporter.StepSucceeded(title);
+            Logger.Information("Node {Node} applied successfully for snapshot {SnapshotId}", title, snapshot.Id);
             return null;
         }
         catch (Exception ex)
         {
+            Logger.Error(ex, "Node {Node} apply failed for snapshot {SnapshotId}", title, snapshot.Id);
             reporter.StepFailed(title, ex.Message);
             return ApplyResult.Failed(ex.Message, title);
         }
