@@ -2,12 +2,18 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.VisualTree;
 using Settings.Controls.ViewModels;
+using System.Windows.Input;
 
 namespace Settings.Controls.Views;
 
 public partial class SettingsViewUserControl : UserControl
 {
     private bool _hasLoaded;
+
+    public ICommand? LoadCommand => (DataContext as SettingsViewUserControlViewModel)?.LoadCommand;
+    public ICommand? SaveSnapshotCommand => (DataContext as SettingsViewUserControlViewModel)?.SaveSnapshotCommand;
+    public ICommand? ApplyCommand => (DataContext as SettingsViewUserControlViewModel)?.ApplyCommand;
+    public ICommand? DeleteCommand => (DataContext as SettingsViewUserControlViewModel)?.DeleteCommand;
 
     public SettingsViewUserControl()
     {

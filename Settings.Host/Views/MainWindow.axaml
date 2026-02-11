@@ -1,17 +1,21 @@
-<Window xmlns="https://github.com/avaloniaui"
+﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:Settings.Controls;assembly=Settings.Controls"
         xmlns:host="clr-namespace:Settings.Host"
         xmlns:views="clr-namespace:Settings.Controls.Views;assembly=Settings.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Settings.Host.Views.MainWindow"
         Title="Settings.Host"
         x:DataType="host:MainWindowViewModel">
-    <DockPanel LastChildFill="True">
-        <views:SettingsViewUserControl DataContext="{Binding SettingsView}" />
-    </DockPanel>
+    <Grid RowDefinitions="Auto,*">
+        <StackPanel Orientation="Horizontal" Margin="6">
+            <Button Content="Снять" Command="{Binding SaveSnapshotCommand}" Margin="0,0,6,0" />
+            <Button Content="Применить" Command="{Binding ApplyCommand}" Margin="0,0,6,0" />
+            <Button Content="Удалить" Command="{Binding DeleteCommand}" Margin="0,0,6,0" />
+            <Button Content="Обновить" Command="{Binding LoadCommand}" />
+        </StackPanel>
 
-
+        <views:SettingsViewUserControl Grid.Row="1" DataContext="{Binding SettingsView}" />
+    </Grid>
 </Window>
