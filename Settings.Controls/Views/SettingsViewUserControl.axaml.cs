@@ -1,5 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.VisualTree;
 using Settings.Controls.ViewModels;
 using System.Windows.Input;
@@ -32,6 +34,65 @@ public partial class SettingsViewUserControl : UserControl
         if (DataContext is SettingsViewUserControlViewModel viewModel)
         {
             _ = viewModel.LoadSnapshotsAsync();
+        }
+    }
+
+    private void OnSettingsGridPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        var properties = e.GetCurrentPoint(this).Properties;
+        if (!properties.IsRightButtonPressed)
+        {
+            return;
+        }
+
+        var source = e.Source as Avalonia.Visual;
+        var row = source?.FindAncestorOfType<DataGridRow>();
+        if (row?.DataContext is SettingsSnapshotViewModel selected &&
+            DataContext is SettingsViewUserControlViewModel viewModel)
+        {
+            SettingsGrid.SelectedItem = selected;
+            viewModel.Selected = selected;
+            viewModel.ApplyCommand.RaiseCanExecuteChanged();
+            viewModel.DeleteCommand.RaiseCanExecuteChanged();
+        }
+    }
+
+    private void OnRowContextMenuOpened(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is not SettingsViewUserControlViewModel viewModel)
+        {
+            ApplyMenuItem.IsEnabled = false;
+            DeleteMenuItem.IsEnabled = false;
+            return;
+        }
+
+        ApplyMenuItem.IsEnabled = viewModel.ApplyCommand.CanExecute();
+        DeleteMenuItem.IsEnabled = viewModel.DeleteCommand.CanExecute();
+    }
+
+    private void OnApplyMenuItemClick(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is not SettingsViewUserControlViewModel viewModel)
+        {
+            return;
+        }
+
+        if (viewModel.ApplyCommand.CanExecute())
+        {
+            viewModel.ApplyCommand.Execute();
+        }
+    }
+
+    private void OnDeleteMenuItemClick(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is not SettingsViewUserControlViewModel viewModel)
+        {
+            return;
+        }
+
+        if (viewModel.DeleteCommand.CanExecute())
+        {
+            viewModel.DeleteCommand.Execute();
         }
     }
 }

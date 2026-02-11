@@ -9,7 +9,9 @@
              x:CompileBindings="True">
 
     <Grid>
-        <DataGrid ItemsSource="{Binding Settings}"
+        <DataGrid x:Name="SettingsGrid"
+                  PointerPressed="OnSettingsGridPointerPressed"
+                  ItemsSource="{Binding Settings}"
                   SelectedItem="{Binding Selected, Mode=TwoWay}"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
@@ -33,6 +35,16 @@
                     <Setter Property="MinHeight" Value="22" />
                 </Style>
             </DataGrid.Styles>
+            <DataGrid.ContextMenu>
+                <ContextMenu Opened="OnRowContextMenuOpened">
+                    <MenuItem x:Name="ApplyMenuItem"
+                              Header="Применить"
+                              Click="OnApplyMenuItemClick" />
+                    <MenuItem x:Name="DeleteMenuItem"
+                              Header="Удалить"
+                              Click="OnDeleteMenuItemClick" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="Auto" />
                 <DataGridTextColumn Header="Режим" Binding="{Binding Mode}" Width="Auto" />
