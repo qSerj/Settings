@@ -13,23 +13,37 @@
                   SelectedItem="{Binding Selected, Mode=TwoWay}"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
+                  CanUserResizeColumns="True"
                   GridLinesVisibility="All"
                   BorderThickness="1"
                   BorderBrush="Gray"
-                  Margin="6"
+                  Margin="4"
                   FontStretch="Condensed"
-                  FontSize="11">
+                  FontSize="10"
+                  RowHeight="22"
+                  ColumnHeaderHeight="22">
+            <DataGrid.Styles>
+                <Style Selector="DataGridCell">
+                    <Setter Property="Padding" Value="4,1" />
+                </Style>
+                <Style Selector="DataGridColumnHeader">
+                    <Setter Property="Padding" Value="4,1" />
+                </Style>
+                <Style Selector="DataGridRow">
+                    <Setter Property="MinHeight" Value="22" />
+                </Style>
+            </DataGrid.Styles>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="2*" />
-                <DataGridTextColumn Header="Режим" Binding="{Binding Mode}" Width="*" />
+                <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="Auto" />
+                <DataGridTextColumn Header="Режим" Binding="{Binding Mode}" Width="Auto" />
                 <DataGridTextColumn Header="Обновлено"
                                     Binding="{Binding UpdatedAt, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}"
-                                    Width="*" />
-                <DataGridTextColumn Header="Антенна" Binding="{Binding AntennaSummary}" Width="2*" />
-                <DataGridTextColumn Header="Приемник" Binding="{Binding RpuSummary}" Width="2*" />
-                <DataGridTextColumn Header="Детектор" Binding="{Binding DetectorSummary}" Width="2*" />
-                <DataGridTextColumn Header="СКК" Binding="{Binding DemodulatorSummary}" Width="2*" />
-                <DataGridTextColumn Header="Декодер" Binding="{Binding DecoderSummary}" Width="2*" />
+                                    Width="Auto" />
+                <DataGridTextColumn Header="Антенна" Binding="{Binding AntennaSummary}" Width="Auto" />
+                <DataGridTextColumn Header="Приемник" Binding="{Binding RpuSummary}" Width="Auto" />
+                <DataGridTextColumn Header="Детектор" Binding="{Binding DetectorSummary}" Width="Auto" />
+                <DataGridTextColumn Header="СКК" Binding="{Binding DemodulatorSummary}" Width="Auto" />
+                <DataGridTextColumn Header="Декодер" Binding="{Binding DecoderSummary}" Width="Auto" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

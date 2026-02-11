@@ -17,7 +17,6 @@ public class MainWindowViewModel
     public DelegateCommand DeleteCommand => _view.DeleteCommand;
 
     public MainWindowViewModel(SettingsViewUserControlViewModel view)
-    
     {
         _view = view;
     }
