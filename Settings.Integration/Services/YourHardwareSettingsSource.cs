@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Settings.Core.Models;
 using Settings.Core.Services;
+using Settings.Integration.Hardware;
 
 namespace Settings.Integration.Services;
 
@@ -9,34 +12,42 @@ namespace Settings.Integration.Services;
 // Replace TODOs with actual adapter/API calls.
 public class YourHardwareSettingsSource : SettingsSourceBase
 {
+    private readonly IRuntimeContextProvider _contextProvider;
+    private readonly IReadOnlyDictionary<string, IModeSnapshotCollector> _collectors;
+
+    public YourHardwareSettingsSource(
+        IRuntimeContextProvider contextProvider,
+        IEnumerable<IModeSnapshotCollector> collectors)
+    {
+        _contextProvider = contextProvider;
+        _collectors = collectors.ToDictionary(
+            c => c.Mode,
+            c => c,
+            StringComparer.OrdinalIgnoreCase);
+    }
+
     public override Task<SettingsSnapshot> GetCurrentAsync()
     {
-        var snapshot = new SettingsSnapshot
+        var runtime = _contextProvider.GetCurrent();
+        if (string.IsNullOrWhiteSpace(runtime.Mode))
         {
-            Name = $"HW {DateTimeOffset.UtcNow:yyyy-MM-dd HH:mm:ss}",
-            Mode = "Global",
-            UpdatedAt = DateTimeOffset.UtcNow,
-            Radio = new RadioSettings
-            {
-                Antenna = new AntennaSettings
-                {
-                    IsPresent = true,
-                    IsRelevant = true
-                },
-                Rpu = new RpuSettings
-                {
-                    IsPresent = true,
-                    IsRelevant = true
-                },
-                Detector = new DetectorSettings
-                {
-                    IsPresent = true,
-                    IsRelevant = true
-                }
-            }
-        };
+            throw new InvalidOperationException("Runtime mode is empty.");
+        }
 
-        // TODO: read real hardware state and fill snapshot.Radio nodes.
+        if (!_collectors.TryGetValue(runtime.Mode, out var collector))
+        {
+            throw new InvalidOperationException(
+                $"No snapshot collector is registered for mode '{runtime.Mode}'.");
+        }
+
+        var snapshot = collector.Collect(runtime);
+        snapshot.Mode = runtime.Mode;
+        snapshot.UpdatedAt = DateTimeOffset.UtcNow;
+        if (string.IsNullOrWhiteSpace(snapshot.Name))
+        {
+            snapshot.Name = $"HW {snapshot.Mode}";
+        }
+
         return Task.FromResult(snapshot);
     }
 
