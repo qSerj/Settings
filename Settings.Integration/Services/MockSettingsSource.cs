@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Settings.Core.Models;
 using Settings.Core.Services;
 
-namespace Settings.Host.Services;
+namespace Settings.Integration.Services;
 
 public class MockSettingsSource : SettingsSourceBase
 {
@@ -77,6 +76,4 @@ public class MockSettingsSource : SettingsSourceBase
 
         return Task.FromResult(snapshot);
     }
-
-    // ApplyAsync uses base logic; this mock only generates snapshots.
 }

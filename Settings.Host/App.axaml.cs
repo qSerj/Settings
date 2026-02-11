@@ -7,7 +7,7 @@ using Settings.Core.Interfaces;
 using Settings.Core.Services;
 using Settings.Integration.DependencyInjection;
 using Settings.Integration.Logging;
-using Settings.Host.Services;
+using Settings.Integration.Services;
 using Settings.Host.Views;
 
 namespace Settings.Host;
@@ -28,7 +28,7 @@ public partial class App : Application
         Container = new Container(x =>
         {
             x.For<ISettingsRepository>().Use<JsonSettingsRepository>().Singleton();
-            x.For<ISettingsSource>().Use<MockSettingsSource>().Singleton();
+            x.AddMockSettingsSource();
             x.AddSettingsIntegration();
             x.For<MainWindowViewModel>().Use<MainWindowViewModel>().Transient();
             x.For<SettingsViewUserControlViewModel>().Use<SettingsViewUserControlViewModel>().Transient();

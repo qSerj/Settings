@@ -15,4 +15,16 @@ public static class SettingsIntegrationLamarExtensions
         services.For<ISettingsApplyStrategy>().Add<ObserveModeApplyStrategy>().Singleton();
         return services;
     }
+
+    public static ServiceRegistry AddMockSettingsSource(this ServiceRegistry services)
+    {
+        services.For<ISettingsSource>().Use<MockSettingsSource>().Singleton();
+        return services;
+    }
+
+    public static ServiceRegistry AddYourHardwareSettingsSource(this ServiceRegistry services)
+    {
+        services.For<ISettingsSource>().Use<YourHardwareSettingsSource>().Singleton();
+        return services;
+    }
 }
